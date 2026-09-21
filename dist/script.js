@@ -45,3 +45,61 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
 
 const year = document.querySelector("#year");
 if (year) year.textContent = String(new Date().getFullYear());
+
+const joinDialog = document.querySelector("#join-dialog");
+const joinOpeners = document.querySelectorAll("[data-open-join]");
+const joinCloser = document.querySelector("[data-close-join]");
+let lastJoinTrigger = null;
+
+function openJoinDialog(event) {
+  event?.preventDefault();
+  if (!joinDialog) return;
+  lastJoinTrigger = event?.currentTarget || document.activeElement;
+  closeMenu();
+  joinDialog.showModal();
+}
+
+function closeJoinDialog() {
+  if (!joinDialog?.open) return;
+  joinDialog.close();
+}
+
+joinOpeners.forEach((opener) => opener.addEventListener("click", openJoinDialog));
+joinCloser?.addEventListener("click", closeJoinDialog);
+
+joinDialog?.addEventListener("click", (event) => {
+  if (event.target === joinDialog) closeJoinDialog();
+});
+
+joinDialog?.addEventListener("close", () => {
+  lastJoinTrigger?.focus();
+});
+
+const instagramDialog = document.querySelector("#instagram-dialog");
+const instagramOpeners = document.querySelectorAll("[data-open-instagram]");
+const instagramCloser = document.querySelector("[data-close-instagram]");
+let lastInstagramTrigger = null;
+
+function openInstagramDialog(event) {
+  event?.preventDefault();
+  if (!instagramDialog) return;
+  lastInstagramTrigger = event?.currentTarget || document.activeElement;
+  closeMenu();
+  instagramDialog.showModal();
+}
+
+function closeInstagramDialog() {
+  if (!instagramDialog?.open) return;
+  instagramDialog.close();
+}
+
+instagramOpeners.forEach((opener) => opener.addEventListener("click", openInstagramDialog));
+instagramCloser?.addEventListener("click", closeInstagramDialog);
+
+instagramDialog?.addEventListener("click", (event) => {
+  if (event.target === instagramDialog) closeInstagramDialog();
+});
+
+instagramDialog?.addEventListener("close", () => {
+  lastInstagramTrigger?.focus();
+});

@@ -623,6 +623,134 @@ a:focus-visible {
   font-size: 1.35rem;
 }
 
+.book-shelf {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  margin-top: 54px;
+}
+
+.book-shelf-intro {
+  grid-column: span 4;
+  padding: 28px 28px 28px 0;
+}
+
+.book-shelf-intro h3 {
+  margin: 0 0 18px;
+  font-family: var(--display);
+  font-size: clamp(2.3rem, 4vw, 4rem);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.book-card {
+  grid-column: span 2;
+  display: flex;
+  min-height: 360px;
+  flex-direction: column;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px 8px 3px 3px;
+  padding: 22px 18px;
+  box-shadow: inset -6px 0 rgb(23 23 19 / 0.08);
+}
+
+.book-card span {
+  font-family: var(--utility);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.book-card h4 {
+  margin: auto 0 8px;
+  font-family: var(--display);
+  font-size: 1.75rem;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.book-card p {
+  margin: 0 0 22px;
+  font-style: italic;
+}
+
+.book-card small {
+  border-top: 1px solid currentColor;
+  padding-top: 14px;
+  font-family: var(--utility);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.book-brick { background: var(--brick); color: var(--reverse); }
+.book-mustard { background: var(--mustard); }
+.book-sage { background: var(--sage); }
+.book-violet { background: var(--violet); }
+
+.quote-edition {
+  border-block: 1px solid var(--ink);
+  padding-block: clamp(76px, 10vw, 132px);
+  background: var(--paper-light);
+}
+
+.quote-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 28px;
+  border-bottom: 3px double var(--ink);
+}
+
+.quote-heading h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 7vw, 7rem);
+  letter-spacing: -0.055em;
+  line-height: 0.85;
+}
+
+.quote-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.quote-card {
+  margin: 0;
+  padding: clamp(30px, 5vw, 62px);
+  border-right: 1px solid var(--ink);
+}
+
+.quote-card:last-child {
+  border-right: 0;
+}
+
+.quote-card p {
+  margin: 0 0 28px;
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3vw, 3.2rem);
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.quote-feature p {
+  font-size: clamp(2.4rem, 4.8vw, 5rem);
+}
+
+.quote-card cite {
+  display: block;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  font-family: var(--utility);
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
 .archive {
   padding-top: 0;
 }
@@ -756,9 +884,9 @@ a:focus-visible {
 
 .classified-grid {
   display: grid;
-  grid-template-columns: 7fr 5fr;
+  grid-template-columns: 5fr 7fr;
   gap: 48px;
-  align-items: end;
+  align-items: start;
 }
 
 .classified h2 {
@@ -766,7 +894,90 @@ a:focus-visible {
 }
 
 .classified-grid > div:last-child {
-  max-width: 470px;
+  max-width: none;
+}
+
+.join-intro {
+  max-width: 36ch;
+  font-size: 1.12rem;
+}
+
+.join-options {
+  display: grid;
+  gap: 18px;
+}
+
+.qr-card {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 26px;
+  align-items: center;
+  border: 1.5px solid var(--ink);
+  padding: 20px;
+  background: var(--mustard);
+}
+
+.qr-placeholder {
+  position: relative;
+  display: grid;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 14px solid var(--paper-light);
+  outline: 2px solid var(--ink);
+  background:
+    linear-gradient(90deg, var(--ink) 12%, transparent 12% 24%, var(--ink) 24% 36%, transparent 36% 48%, var(--ink) 48% 60%, transparent 60% 72%, var(--ink) 72% 84%, transparent 84%),
+    linear-gradient(var(--ink) 12%, transparent 12% 24%, var(--ink) 24% 36%, transparent 36% 48%, var(--ink) 48% 60%, transparent 60% 72%, var(--ink) 72% 84%, transparent 84%),
+    var(--paper-light);
+}
+
+.qr-placeholder::after {
+  content: "LINK PENDING";
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  padding: 5px;
+  background: var(--brick);
+  color: var(--reverse);
+  font-family: var(--utility);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+.qr-placeholder span {
+  position: relative;
+  z-index: 1;
+  padding: 4px 8px;
+  background: var(--paper-light);
+  font-family: var(--display);
+  font-size: 2.4rem;
+  font-weight: 900;
+}
+
+.qr-card p {
+  margin: 0 0 10px;
+}
+
+.instagram-note {
+  border: 1.5px solid var(--ink);
+  padding: 26px;
+  background: var(--violet);
+}
+
+.instagram-note h3 {
+  margin: 6px 0 8px;
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.button-disabled {
+  margin-top: 10px;
+  cursor: not-allowed;
+  opacity: 0.75;
 }
 
 .contact-note {
@@ -778,6 +989,167 @@ a:focus-visible {
 
 .classified .button {
   margin-top: 12px;
+}
+
+button.button {
+  cursor: pointer;
+  font-family: var(--utility);
+}
+
+.join-dialog {
+  width: min(880px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+}
+
+.join-dialog::backdrop {
+  background: rgb(23 23 19 / 0.76);
+  backdrop-filter: blur(3px);
+}
+
+.join-dialog[open] {
+  animation: dialog-in 240ms ease both;
+}
+
+.instagram-dialog .dialog-paper {
+  box-shadow: 12px 12px 0 var(--violet);
+}
+
+.dialog-paper {
+  position: relative;
+  border: 4px double var(--ink);
+  padding: clamp(28px, 6vw, 64px);
+  background:
+    repeating-linear-gradient(0deg, rgb(23 23 19 / 0.018) 0, rgb(23 23 19 / 0.018) 1px, transparent 1px, transparent 4px),
+    var(--paper-light);
+  box-shadow: 12px 12px 0 var(--mustard);
+}
+
+.dialog-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper-light);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--utility);
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.dialog-close:hover {
+  background: var(--ink);
+  color: var(--reverse);
+}
+
+.join-dialog h2 {
+  margin: 0 64px 30px 0;
+  font-family: var(--display);
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  letter-spacing: -0.055em;
+  line-height: 0.85;
+}
+
+.dialog-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(280px, 1.2fr);
+  gap: clamp(28px, 5vw, 52px);
+  align-items: center;
+  border-top: 3px double var(--ink);
+  padding-top: 30px;
+}
+
+.dialog-qr {
+  width: 100%;
+  max-width: 320px;
+}
+
+.instagram-qr::after {
+  background: var(--violet);
+  color: var(--ink);
+}
+
+.instagram-qr span {
+  font-size: 2rem;
+}
+
+.instagram-link button {
+  background: var(--violet);
+  color: var(--ink);
+}
+
+.dialog-copy h3 {
+  margin: 0 0 12px;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+}
+
+.invite-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin-top: 24px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+}
+
+.invite-link span {
+  min-width: 0;
+  padding: 13px 14px;
+  overflow: hidden;
+  font-family: var(--utility);
+  font-size: 0.84rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.invite-link button {
+  border: 0;
+  border-left: 1.5px solid var(--ink);
+  padding: 0 16px;
+  background: var(--ink);
+  color: var(--reverse);
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.invite-link button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.dialog-status {
+  margin-bottom: 0;
+  border-left: 4px solid var(--brick);
+  padding-left: 12px;
+  font-family: var(--utility);
+  font-size: 0.82rem;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .site-footer {
@@ -892,6 +1264,29 @@ a:focus-visible {
 
   .footer-grid {
     grid-template-columns: 2fr 1fr;
+  }
+
+  .book-shelf-intro {
+    grid-column: 1 / -1;
+  }
+
+  .book-card {
+    grid-column: span 6;
+    min-height: 300px;
+  }
+
+  .quote-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quote-card,
+  .quote-card:last-child {
+    border-right: 0;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .quote-card:last-child {
+    border-bottom: 0;
   }
 }
 
@@ -1045,6 +1440,49 @@ a:focus-visible {
 
   .footer-grid {
     grid-template-columns: 1fr;
+  }
+
+  .book-card {
+    grid-column: 1 / -1;
+    min-height: 270px;
+  }
+
+  .quote-heading {
+    display: block;
+  }
+
+  .quote-heading h2 {
+    margin-top: 18px;
+  }
+
+  .qr-card {
+    grid-template-columns: 1fr;
+  }
+
+  .qr-placeholder {
+    width: min(100%, 220px);
+  }
+
+  .dialog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dialog-qr {
+    width: min(100%, 230px);
+  }
+
+  .dialog-paper {
+    padding: 28px 22px;
+    box-shadow: 7px 7px 0 var(--mustard);
+  }
+
+  .instagram-dialog .dialog-paper {
+    box-shadow: 7px 7px 0 var(--violet);
+  }
+
+  .dialog-close {
+    top: 12px;
+    right: 12px;
   }
 }
 
