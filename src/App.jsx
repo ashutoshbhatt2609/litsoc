@@ -276,11 +276,48 @@ function App() {
 
         <section className="join page-shell" id="join" aria-labelledby="join-title">
           <div className="classified reveal">
-            <p className="eyebrow">Join the club · WhatsApp community</p>
-            <div className="classified-grid">
-              <div><h2 id="join-title">Join the<br />club.</h2><p className="join-intro">Interested in screenings, book sessions, poetry, or helping make the next event happen? Come into the LitSoc community.</p><button className="button button-primary" type="button" onClick={(event) => openDialog("join", event)}>Open the join box</button></div>
-              <div className="join-options"><div className="instagram-note"><p className="eyebrow">For event updates</p><h3>Follow LitSoc on Instagram.</h3><p>Posters, announcements, reminders, and glimpses from every gathering.</p><button className="button button-primary" type="button" onClick={(event) => openDialog("instagram", event)}>Open Instagram box</button></div></div>
+            <header className="classified-header">
+              <div>
+                <p className="eyebrow">The membership desk · Open to every curious mind</p>
+                <h2 className="classified-title" id="join-title">Come into<br />the circle.</h2>
+              </div>
+              <p className="classified-intro">Whether you read every week or only remember a line from a film, there is a place for you at LitSoc.</p>
+            </header>
+
+            <div className="community-grid">
+              <article className="community-card whatsapp-card">
+                <div className="community-card-top">
+                  <span>01 · Community</span>
+                  <span className="channel-label">Join the club</span>
+                </div>
+                <span className="community-number" aria-hidden="true">01</span>
+                <div className="community-card-copy">
+                  <p className="eyebrow">Our main noticeboard</p>
+                  <h3>Join the WhatsApp community.</h3>
+                  <p>Hear about screenings, book sessions, open mics, and ways to help shape the next LitSoc gathering.</p>
+                </div>
+                <button className="button button-dark" type="button" onClick={(event) => openDialog("join", event)}>View invite &amp; QR</button>
+              </article>
+
+              <article className="community-card instagram-card">
+                <div className="community-card-top">
+                  <span>02 · Dispatches</span>
+                  <span className="channel-label">Follow along</span>
+                </div>
+                <span className="community-number" aria-hidden="true">02</span>
+                <div className="community-card-copy">
+                  <p className="eyebrow">Posters &amp; moments</p>
+                  <h3>Follow LitSoc on Instagram.</h3>
+                  <p>Find event posters, reminders, reading recommendations, and glimpses from every gathering.</p>
+                </div>
+                <button className="button button-dark" type="button" onClick={(event) => openDialog("instagram", event)}>View profile &amp; QR</button>
+              </article>
             </div>
+
+            <footer className="classified-footer">
+              <span>Membership costs nothing.</span>
+              <span>Curiosity is the only requirement.</span>
+            </footer>
           </div>
         </section>
       </main>

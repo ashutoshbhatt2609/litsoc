@@ -878,33 +878,147 @@ a:focus-visible {
 
 .classified {
   border: 4px double var(--ink);
-  padding: clamp(28px, 6vw, 72px);
+  padding: clamp(24px, 4vw, 52px);
   background: var(--paper-light);
 }
 
-.classified-grid {
+.classified-header {
   display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: 48px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: end;
+  border-bottom: 1.5px solid var(--ink);
+  padding: 8px 8px clamp(30px, 4vw, 50px);
 }
 
-.classified h2 {
-  margin: 16px 0 0;
+.classified .classified-title {
+  max-width: 760px;
+  margin: 18px 0 0;
+  font-family: var(--display);
+  font-size: clamp(4rem, 8vw, 7.8rem);
+  letter-spacing: -0.065em;
+  line-height: 0.78;
 }
 
-.classified-grid > div:last-child {
-  max-width: none;
+.classified-intro {
+  max-width: 34ch;
+  margin: 0;
+  border-left: 4px solid var(--brick);
+  padding-left: 20px;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
 }
 
-.join-intro {
-  max-width: 36ch;
-  font-size: 1.12rem;
-}
-
-.join-options {
+.community-grid {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
+  padding-block: 18px;
+}
+
+.community-card {
+  position: relative;
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1.5px solid var(--ink);
+  padding: clamp(24px, 3.5vw, 42px);
+}
+
+.whatsapp-card {
+  background: var(--sage);
+}
+
+.instagram-card {
+  background: var(--violet);
+}
+
+.community-card-top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgb(23 23 19 / 0.58);
+  padding-bottom: 14px;
+  font-family: var(--utility);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.channel-label {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+.community-number {
+  position: absolute;
+  top: 48px;
+  right: 22px;
+  color: rgb(23 23 19 / 0.1);
+  font-family: var(--display);
+  font-size: clamp(8rem, 16vw, 15rem);
+  font-weight: 900;
+  letter-spacing: -0.09em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.community-card-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: auto 0 28px;
+}
+
+.community-card-copy h3 {
+  max-width: 10ch;
+  margin: 8px 0 16px;
+  font-family: var(--display);
+  font-size: clamp(2.35rem, 4.2vw, 4.4rem);
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.community-card-copy > p:last-child {
+  max-width: 40ch;
+  margin-bottom: 0;
+  font-size: 1.05rem;
+}
+
+.community-card .button {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin-top: 0;
+}
+
+.button-dark {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--reverse);
+}
+
+.button-dark:hover {
+  background: var(--paper-light);
+  color: var(--ink);
+}
+
+.classified-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1.5px solid var(--ink);
+  padding: 18px 8px 0;
+  font-family: var(--utility);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .qr-card {
@@ -960,20 +1074,6 @@ a:focus-visible {
   margin: 0 0 10px;
 }
 
-.instagram-note {
-  border: 1.5px solid var(--ink);
-  padding: 26px;
-  background: var(--violet);
-}
-
-.instagram-note h3 {
-  margin: 6px 0 8px;
-  font-family: var(--display);
-  font-size: clamp(1.9rem, 3vw, 3rem);
-  letter-spacing: -0.035em;
-  line-height: 1;
-}
-
 .button-disabled {
   margin-top: 10px;
   cursor: not-allowed;
@@ -985,10 +1085,6 @@ a:focus-visible {
   padding-left: 12px;
   font-family: var(--utility);
   font-size: 0.86rem;
-}
-
-.classified .button {
-  margin-top: 12px;
 }
 
 button.button {
@@ -1198,8 +1294,21 @@ button.button {
 @media (max-width: 920px) {
   .hero,
   .about-grid,
-  .classified-grid {
+  .classified-header,
+  .community-grid {
     grid-template-columns: 1fr;
+  }
+
+  .classified-header {
+    align-items: start;
+  }
+
+  .classified-intro {
+    max-width: 46ch;
+  }
+
+  .community-card {
+    min-height: 390px;
   }
 
   .hero {
@@ -1409,6 +1518,54 @@ button.button {
   .about h2,
   .classified h2 {
     font-size: clamp(3rem, 14vw, 4.6rem);
+  }
+
+  .classified {
+    padding: 18px;
+  }
+
+  .classified-header {
+    gap: 24px;
+    padding: 4px 4px 28px;
+  }
+
+  .classified .classified-title {
+    font-size: clamp(3.7rem, 19vw, 5.2rem);
+  }
+
+  .classified-intro {
+    border-left-width: 3px;
+    padding-left: 14px;
+  }
+
+  .community-grid {
+    gap: 12px;
+    padding-block: 12px;
+  }
+
+  .community-card {
+    min-height: 420px;
+    padding: 22px;
+  }
+
+  .community-card-top {
+    align-items: flex-start;
+  }
+
+  .community-number {
+    top: 72px;
+    right: 14px;
+    font-size: 9rem;
+  }
+
+  .community-card-copy h3 {
+    font-size: clamp(2.7rem, 13vw, 3.7rem);
+  }
+
+  .classified-footer {
+    display: grid;
+    gap: 6px;
+    padding-inline: 4px;
   }
 
   .editor-note,
