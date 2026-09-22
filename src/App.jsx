@@ -70,32 +70,36 @@ const vintageCurios = {
     id: "seal",
     type: "seal",
     number: "I",
-    title: "A promise sealed for the next gathering.",
-    copy: "Bring one line you love, one question you cannot settle, and enough curiosity to stay after the ending.",
+    title: "For the nights that become footnotes in our lives.",
+    copy: "Open this when the room is full of half-known faces and someone reads a line that makes them all feel familiar.",
+    source: "A note sealed for LitSoc",
     label: "Break the LitSoc wax seal",
   },
   typewriter: {
     id: "typewriter",
     type: "typewriter",
     number: "II",
-    title: "The page begins when somebody presses a key.",
-    copy: "Drafts are welcome here. So are crossed-out beginnings, unfinished poems, and stories still looking for their final sentence.",
+    title: "Your first draft is allowed to arrive trembling.",
+    copy: "Press a key. Then another. Every poem, confession, and impossible story once began as an empty page that somebody refused to leave empty.",
+    source: "Found beside an old typewriter",
     label: "Press the antique typewriter keys",
   },
   library: {
     id: "library",
     type: "library",
     number: "III",
-    title: "This story has no return date.",
-    copy: "The best books keep circulating long after they leave our hands—in arguments, memories, and the people we become.",
+    title: "Some books are returned. Their sentences never are.",
+    copy: "If a line follows you home, underline it. If it changes you, lend the book to somebody else and begin the conversation again.",
+    source: "The last entry on the checkout card",
     label: "Open the hidden library checkout card",
   },
   stamp: {
     id: "stamp",
     type: "stamp",
     number: "IV",
-    title: "Postmarked from a future LitSoc evening.",
-    copy: "The room is full, the projector is warm, and somebody has just read a line that makes everyone fall quiet.",
+    title: "To whoever finds this in another year—keep the room alive.",
+    copy: "Screen something brave. Read something aloud. Leave an empty chair for the next curious mind.",
+    source: "Postmarked: a future LitSoc evening",
     label: "Open the vintage postage stamp",
   },
 };
@@ -253,6 +257,7 @@ function CurioDialog({ curio, foundCount, total, onClose }) {
           </div>
           <h2 id="curio-dialog-title">{curio.title}</h2>
           <p>{curio.copy}</p>
+          <p className="curio-source">— {curio.source}</p>
           <footer className="curio-footer">
             <span>Object no. {curio.number}</span>
             <button type="button" onClick={onClose}>Return it carefully <span aria-hidden="true">→</span></button>
