@@ -65,6 +65,41 @@ const marginQuotes = {
   },
 };
 
+const vintageCurios = {
+  seal: {
+    id: "seal",
+    type: "seal",
+    number: "I",
+    title: "A promise sealed for the next gathering.",
+    copy: "Bring one line you love, one question you cannot settle, and enough curiosity to stay after the ending.",
+    label: "Break the LitSoc wax seal",
+  },
+  typewriter: {
+    id: "typewriter",
+    type: "typewriter",
+    number: "II",
+    title: "The page begins when somebody presses a key.",
+    copy: "Drafts are welcome here. So are crossed-out beginnings, unfinished poems, and stories still looking for their final sentence.",
+    label: "Press the antique typewriter keys",
+  },
+  library: {
+    id: "library",
+    type: "library",
+    number: "III",
+    title: "This story has no return date.",
+    copy: "The best books keep circulating long after they leave our hands—in arguments, memories, and the people we become.",
+    label: "Open the hidden library checkout card",
+  },
+  stamp: {
+    id: "stamp",
+    type: "stamp",
+    number: "IV",
+    title: "Postmarked from a future LitSoc evening.",
+    copy: "The room is full, the projector is warm, and somebody has just read a line that makes everyone fall quiet.",
+    label: "Open the vintage postage stamp",
+  },
+};
+
 const archiveCards = [
   ["archive-one", "Frame 01", "Screenings", "Posters, projector glow, and the conversation after."],
   ["archive-two", "Frame 02", "Sessions", "Marked pages, shared passages, and changing opinions."],
@@ -168,6 +203,66 @@ function QuoteDialog({ quote, foundCount, total, onClose }) {
   );
 }
 
+function VintageEgg({ curio, onReveal }) {
+  return (
+    <button
+      className={`vintage-egg vintage-egg-${curio.type}`}
+      type="button"
+      onClick={(event) => onReveal(curio, event)}
+      aria-label={curio.label}
+      title={curio.label}
+    >
+      {curio.type === "seal" && <><span className="seal-rim" aria-hidden="true">LS</span><span className="egg-caption">Break seal</span></>}
+      {curio.type === "typewriter" && <><span className="typewriter-keys" aria-hidden="true"><i>L</i><i>I</i><i>T</i></span><span className="egg-caption">Press the keys</span></>}
+      {curio.type === "library" && <><span className="library-lines" aria-hidden="true"><b>EX LIBRIS</b><i /><i /><i /></span><span className="egg-caption">Check the card</span></>}
+      {curio.type === "stamp" && <><span className="stamp-face" aria-hidden="true"><b>3P</b><i>LITSOC</i></span><span className="egg-caption">Open post</span></>}
+    </button>
+  );
+}
+
+function CurioDialog({ curio, foundCount, total, onClose }) {
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (curio && !dialog.open) dialog.showModal();
+    if (!curio && dialog.open) dialog.close();
+  }, [curio]);
+
+  return (
+    <dialog
+      className="curio-dialog"
+      ref={dialogRef}
+      aria-labelledby="curio-dialog-title"
+      onClose={onClose}
+      onClick={(event) => event.target === event.currentTarget && onClose()}
+    >
+      {curio && (
+        <article className={`curio-paper curio-paper-${curio.type}`}>
+          <button className="dialog-close" type="button" onClick={onClose} aria-label="Close vintage discovery">×</button>
+          <header className="curio-header">
+            <span>LitSoc cabinet of curiosities · {curio.number}</span>
+            <span>{foundCount} / {total} found</span>
+          </header>
+          <div className={`curio-emblem curio-emblem-${curio.type}`} aria-hidden="true">
+            {curio.type === "seal" && "LS"}
+            {curio.type === "typewriter" && "L I T"}
+            {curio.type === "library" && "EX LIBRIS"}
+            {curio.type === "stamp" && "POST"}
+          </div>
+          <h2 id="curio-dialog-title">{curio.title}</h2>
+          <p>{curio.copy}</p>
+          <footer className="curio-footer">
+            <span>Object no. {curio.number}</span>
+            <button type="button" onClick={onClose}>Return it carefully <span aria-hidden="true">→</span></button>
+          </footer>
+        </article>
+      )}
+    </dialog>
+  );
+}
+
 function SocialDialog({ open, onClose, type }) {
   const dialogRef = useRef(null);
   const isInstagram = type === "instagram";
@@ -219,8 +314,11 @@ function App() {
   const [dialog, setDialog] = useState(null);
   const [activeQuote, setActiveQuote] = useState(null);
   const [foundQuotes, setFoundQuotes] = useState([]);
+  const [activeCurio, setActiveCurio] = useState(null);
+  const [foundCurios, setFoundCurios] = useState([]);
   const lastTrigger = useRef(null);
   const quoteTrigger = useRef(null);
+  const curioTrigger = useRef(null);
   useRevealOnScroll();
 
   useEffect(() => {
@@ -254,6 +352,17 @@ function App() {
   const closeQuote = () => {
     setActiveQuote(null);
     window.setTimeout(() => quoteTrigger.current?.focus(), 0);
+  };
+
+  const revealCurio = (curio, event) => {
+    curioTrigger.current = event?.currentTarget ?? null;
+    setFoundCurios((found) => found.includes(curio.id) ? found : [...found, curio.id]);
+    setActiveCurio(curio);
+  };
+
+  const closeCurio = () => {
+    setActiveCurio(null);
+    window.setTimeout(() => curioTrigger.current?.focus(), 0);
   };
 
   const closeMenu = () => setMenuOpen(false);
@@ -357,7 +466,7 @@ function App() {
                 <div><p className="eyebrow">Lead story · Upcoming</p><h3>The next LitSoc gathering</h3><p>Screening, session, reading, or open mic—the details will arrive with the next issue.</p></div>
               </article>
               <div className="event-note reveal">
-                <span className="stamp">Notice</span><h3>Have an idea for a session?</h3><p>Bring a book, film, theme, poem, or question you think the community should explore.</p><a className="text-link" href="#join"><LinkArrow>Write to LitSoc</LinkArrow></a>
+                <span className="stamp">Notice</span><h3>Have an idea for a session?</h3><p>Bring a book, film, theme, poem, or question you think the community should explore.</p><VintageEgg curio={vintageCurios.seal} onReveal={revealCurio} /><a className="text-link" href="#join"><LinkArrow>Write to LitSoc</LinkArrow></a>
               </div>
             </div>
           </div>
@@ -375,11 +484,12 @@ function App() {
             <aside className="departments-list reveal" aria-label="Creative work categories">
               <p className="eyebrow">Inside the section</p>
               <ol>{["Poetry", "Short prose", "Book notes", "Film reflections"].map((item, index) => <li key={item}><span>0{index + 1}</span><strong>{item}</strong></li>)}</ol>
+              <VintageEgg curio={vintageCurios.typewriter} onReveal={revealCurio} />
             </aside>
           </div>
           <div className="book-shelf reveal" aria-labelledby="books-title">
             <div className="book-shelf-intro"><p className="eyebrow">Shelf notes · Four places to begin</p><h3 id="books-title">Books worth carrying around.</h3><p>Four very different reads for a future session, a long bus ride, or an argument with a friend.</p><QuoteEgg quote={marginQuotes.shelf} onReveal={revealQuote} /></div>
-            {books.map(([tone, number, title, author, note]) => <article className={`book-card ${tone}`} key={title}><span>{number}</span><h4>{title}</h4><p>{author}</p><small>{note}</small></article>)}
+            {books.map(([tone, number, title, author, note], index) => <article className={`book-card ${tone}`} key={title}><span>{number}</span><h4>{title}</h4><p>{author}</p><small>{note}</small>{index === 2 && <VintageEgg curio={vintageCurios.library} onReveal={revealCurio} />}</article>)}
           </div>
         </section>
 
@@ -393,7 +503,7 @@ function App() {
         <section className="archive page-shell" id="moments" aria-labelledby="archive-title">
           <div className="archive-title reveal"><div><p className="eyebrow">The archive · Recent moments</p><QuoteEgg quote={marginQuotes.archive} onReveal={revealQuote} /></div><h2 id="archive-title">To be collected,<br />captioned &amp; remembered.</h2></div>
           <div className="archive-strip" aria-label="Future LitSoc event archive">{archiveCards.map(([tone, frame, title, copy]) => <article className={`archive-card ${tone} reveal`} key={frame}><span>{frame}</span><strong>{title}</strong><p>{copy}</p></article>)}</div>
-          <p className="archive-caption">Real LitSoc photographs will replace these typographic archive cards when supplied.</p>
+          <div className="archive-caption-row"><p className="archive-caption">Real LitSoc photographs will replace these typographic archive cards when supplied.</p><VintageEgg curio={vintageCurios.stamp} onReveal={revealCurio} /></div>
         </section>
 
         <section className="about" id="about" aria-labelledby="about-title">
@@ -462,6 +572,7 @@ function App() {
       <SocialDialog open={dialog === "join"} onClose={closeDialog} type="join" />
       <SocialDialog open={dialog === "instagram"} onClose={closeDialog} type="instagram" />
       <QuoteDialog quote={activeQuote} foundCount={foundQuotes.length} total={Object.keys(marginQuotes).length} onClose={closeQuote} />
+      <CurioDialog curio={activeCurio} foundCount={foundCurios.length} total={Object.keys(vintageCurios).length} onClose={closeCurio} />
     </>
   );
 }
