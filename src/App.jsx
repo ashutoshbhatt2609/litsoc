@@ -110,6 +110,22 @@ const archiveCards = [
   ["archive-three", "Frame 03", "Open mics", "A microphone, a room, and someone reading for the first time."],
 ];
 
+const bubbleTrail = [
+  [8, 34, 0], [17, 22, 80], [27, 46, 35], [38, 28, 130],
+  [49, 54, 65], [59, 24, 160], [70, 42, 105], [82, 30, 190],
+  [91, 48, 145], [23, 18, 220], [53, 36, 250], [76, 20, 285],
+];
+
+function BubbleBurst() {
+  return (
+    <span className="bubble-burst" aria-hidden="true">
+      {bubbleTrail.map(([left, size, delay], index) => (
+        <i key={index} style={{ "--bubble-left": `${left}%`, "--bubble-size": `${size}px`, "--bubble-delay": `${delay}ms` }} />
+      ))}
+    </span>
+  );
+}
+
 function useRevealOnScroll() {
   useEffect(() => {
     const items = document.querySelectorAll(".reveal");
@@ -164,13 +180,30 @@ function QuoteEgg({ quote, onReveal }) {
 
 function QuoteDialog({ quote, foundCount, total, onClose }) {
   const dialogRef = useRef(null);
+  const closeTimer = useRef(null);
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (quote && !dialog.open) dialog.showModal();
+    if (quote && !dialog.open) {
+      setIsLeaving(false);
+      dialog.showModal();
+    }
     if (!quote && dialog.open) dialog.close();
   }, [quote]);
+
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
+
+  const driftAway = () => {
+    if (isLeaving) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      onClose();
+      return;
+    }
+    setIsLeaving(true);
+    closeTimer.current = window.setTimeout(onClose, 760);
+  };
 
   return (
     <dialog
@@ -181,7 +214,8 @@ function QuoteDialog({ quote, foundCount, total, onClose }) {
       onClick={(event) => event.target === event.currentTarget && onClose()}
     >
       {quote && (
-        <div className={`smoke-scene smoke-scene-${quote.tone}`}>
+        <div className={`smoke-scene smoke-scene-${quote.tone}${isLeaving ? " bubble-leaving" : ""}`}>
+          <BubbleBurst />
           <div className="smoke-puffs" aria-hidden="true">
             <span /><span /><span /><span /><span />
           </div>
@@ -198,7 +232,7 @@ function QuoteDialog({ quote, foundCount, total, onClose }) {
             </blockquote>
             <footer className="quote-slip-footer">
               <span>Cloud note no. {quote.number}</span>
-              <button type="button" onClick={onClose}>Let it drift away <span aria-hidden="true">→</span></button>
+              <button type="button" onClick={driftAway}>Let it drift away <span aria-hidden="true">→</span></button>
             </footer>
           </article>
         </div>
@@ -226,13 +260,30 @@ function VintageEgg({ curio, onReveal }) {
 
 function CurioDialog({ curio, foundCount, total, onClose }) {
   const dialogRef = useRef(null);
+  const closeTimer = useRef(null);
+  const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (curio && !dialog.open) dialog.showModal();
+    if (curio && !dialog.open) {
+      setIsLeaving(false);
+      dialog.showModal();
+    }
     if (!curio && dialog.open) dialog.close();
   }, [curio]);
+
+  useEffect(() => () => window.clearTimeout(closeTimer.current), []);
+
+  const returnCarefully = () => {
+    if (isLeaving) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      onClose();
+      return;
+    }
+    setIsLeaving(true);
+    closeTimer.current = window.setTimeout(onClose, 760);
+  };
 
   return (
     <dialog
@@ -243,7 +294,9 @@ function CurioDialog({ curio, foundCount, total, onClose }) {
       onClick={(event) => event.target === event.currentTarget && onClose()}
     >
       {curio && (
-        <article className={`curio-paper curio-paper-${curio.type}`}>
+        <div className={`curio-scene${isLeaving ? " bubble-leaving" : ""}`}>
+          <BubbleBurst />
+          <article className={`curio-paper curio-paper-${curio.type}`}>
           <button className="dialog-close" type="button" onClick={onClose} aria-label="Close vintage discovery">×</button>
           <header className="curio-header">
             <span>LitSoc cabinet of curiosities · {curio.number}</span>
@@ -260,9 +313,10 @@ function CurioDialog({ curio, foundCount, total, onClose }) {
           <p className="curio-source">— {curio.source}</p>
           <footer className="curio-footer">
             <span>Object no. {curio.number}</span>
-            <button type="button" onClick={onClose}>Return it carefully <span aria-hidden="true">→</span></button>
+            <button type="button" onClick={returnCarefully}>Return it carefully <span aria-hidden="true">→</span></button>
           </footer>
-        </article>
+          </article>
+        </div>
       )}
     </dialog>
   );

@@ -1226,9 +1226,72 @@ button.button {
 
 .smoke-scene {
   --quote-accent: var(--brick);
+  --bubble-color: var(--quote-accent);
   position: relative;
   isolation: isolate;
   animation: cloud-arrive 620ms cubic-bezier(0.2, 0.85, 0.25, 1.18) both;
+}
+
+.curio-scene {
+  --bubble-color: var(--paper-light);
+  position: relative;
+  isolation: isolate;
+}
+
+.bubble-burst {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.bubble-burst i {
+  position: absolute;
+  bottom: 12%;
+  left: var(--bubble-left);
+  display: block;
+  width: var(--bubble-size);
+  aspect-ratio: 1;
+  border: 1.5px solid color-mix(in srgb, var(--bubble-color) 54%, var(--ink));
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, rgb(255 255 255 / 0.84) 0 8%, transparent 9%),
+    color-mix(in srgb, var(--bubble-color) 46%, transparent);
+  box-shadow: inset -4px -5px 0 rgb(23 23 19 / 0.08);
+  opacity: 0;
+  transform: translate(-50%, 0) scale(0.2);
+}
+
+.bubble-leaving .quote-slip,
+.bubble-leaving .curio-paper {
+  animation: artifact-bubble-away 720ms cubic-bezier(0.42, 0, 0.8, 0.36) both !important;
+  pointer-events: none;
+}
+
+.bubble-leaving .smoke-puffs {
+  animation: smoke-fade-away 520ms ease both;
+}
+
+.bubble-leaving .bubble-burst i {
+  animation: bubble-float-away 680ms cubic-bezier(0.18, 0.72, 0.22, 1) var(--bubble-delay) both;
+}
+
+@keyframes artifact-bubble-away {
+  0% { opacity: 1; transform: scale(1); filter: blur(0); }
+  38% { opacity: 0.82; transform: scale(0.94); filter: blur(1px); }
+  100% { opacity: 0; transform: translateY(-28px) scale(0.72); filter: blur(10px); }
+}
+
+@keyframes bubble-float-away {
+  0% { opacity: 0; transform: translate(-50%, 14px) scale(0.18); }
+  24% { opacity: 0.9; }
+  72% { opacity: 0.62; }
+  100% { opacity: 0; transform: translate(calc(-50% + 18px), -180px) scale(1.18); }
+}
+
+@keyframes smoke-fade-away {
+  to { opacity: 0; transform: translateY(-42px) scale(1.16); filter: blur(8px); }
 }
 
 .smoke-scene-brick { --quote-accent: var(--brick); }
