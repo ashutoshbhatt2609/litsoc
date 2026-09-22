@@ -20,6 +20,51 @@ const quotes = [
   ["", "“Whatever our souls are made of, his and mine are the same.”", "Emily Brontë · Wuthering Heights"],
 ];
 
+const marginQuotes = {
+  hero: {
+    id: "hero",
+    number: "01",
+    tone: "brick",
+    quote: "No matter what anybody tells you, words and ideas can change the world.",
+    source: "Dead Poets Society",
+  },
+  table: {
+    id: "table",
+    number: "02",
+    tone: "violet",
+    quote: "I am no bird; and no net ensnares me.",
+    source: "Charlotte Brontë · Jane Eyre",
+  },
+  voices: {
+    id: "voices",
+    number: "03",
+    tone: "mustard",
+    quote: "There is nothing like looking, if you want to find something.",
+    source: "J. R. R. Tolkien · The Hobbit",
+  },
+  shelf: {
+    id: "shelf",
+    number: "04",
+    tone: "sage",
+    quote: "The books that the world calls immoral are books that show the world its own shame.",
+    source: "Oscar Wilde · The Picture of Dorian Gray",
+  },
+  archive: {
+    id: "archive",
+    number: "05",
+    tone: "violet",
+    quote: "So we beat on, boats against the current, borne back ceaselessly into the past.",
+    source: "F. Scott Fitzgerald · The Great Gatsby",
+  },
+  people: {
+    id: "people",
+    number: "06",
+    tone: "mustard",
+    quote: "I'd rather take coffee than compliments just now.",
+    source: "Louisa May Alcott · Little Women",
+  },
+};
+
 const archiveCards = [
   ["archive-one", "Frame 01", "Screenings", "Posters, projector glow, and the conversation after."],
   ["archive-two", "Frame 02", "Sessions", "Marked pages, shared passages, and changing opinions."],
@@ -54,6 +99,61 @@ function useRevealOnScroll() {
 
 function LinkArrow({ children }) {
   return <>{children} <span aria-hidden="true">→</span></>;
+}
+
+function QuoteEgg({ quote, onReveal }) {
+  return (
+    <button
+      className={`quote-egg quote-egg-${quote.tone}`}
+      type="button"
+      onClick={(event) => onReveal(quote, event)}
+      aria-label={`Open hidden margin quote ${quote.number}`}
+      title="A note is hiding in the margin"
+    >
+      <span aria-hidden="true">✦</span>
+      <span>Margin note {quote.number}</span>
+    </button>
+  );
+}
+
+function QuoteDialog({ quote, foundCount, total, onClose }) {
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (quote && !dialog.open) dialog.showModal();
+    if (!quote && dialog.open) dialog.close();
+  }, [quote]);
+
+  return (
+    <dialog
+      className="quote-dialog"
+      ref={dialogRef}
+      aria-labelledby="quote-dialog-title"
+      onClose={onClose}
+      onClick={(event) => event.target === event.currentTarget && onClose()}
+    >
+      {quote && (
+        <article className={`quote-slip quote-slip-${quote.tone}`}>
+          <button className="dialog-close" type="button" onClick={onClose} aria-label="Close hidden quote">×</button>
+          <header className="quote-slip-header">
+            <span>Found in the margins</span>
+            <span>{foundCount} / {total} discovered</span>
+          </header>
+          <blockquote>
+            <span className="quote-mark" aria-hidden="true">“</span>
+            <p id="quote-dialog-title">{quote.quote}</p>
+            <cite>{quote.source}</cite>
+          </blockquote>
+          <footer className="quote-slip-footer">
+            <span>Marginalia no. {quote.number}</span>
+            <button type="button" onClick={onClose}>Return to the page <span aria-hidden="true">→</span></button>
+          </footer>
+        </article>
+      )}
+    </dialog>
+  );
 }
 
 function SocialDialog({ open, onClose, type }) {
@@ -105,7 +205,10 @@ function SocialDialog({ open, onClose, type }) {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dialog, setDialog] = useState(null);
+  const [activeQuote, setActiveQuote] = useState(null);
+  const [foundQuotes, setFoundQuotes] = useState([]);
   const lastTrigger = useRef(null);
+  const quoteTrigger = useRef(null);
   useRevealOnScroll();
 
   useEffect(() => {
@@ -128,6 +231,17 @@ function App() {
   const closeDialog = () => {
     setDialog(null);
     window.setTimeout(() => lastTrigger.current?.focus(), 0);
+  };
+
+  const revealQuote = (quote, event) => {
+    quoteTrigger.current = event?.currentTarget ?? null;
+    setFoundQuotes((found) => found.includes(quote.id) ? found : [...found, quote.id]);
+    setActiveQuote(quote);
+  };
+
+  const closeQuote = () => {
+    setActiveQuote(null);
+    window.setTimeout(() => quoteTrigger.current?.focus(), 0);
   };
 
   const closeMenu = () => setMenuOpen(false);
@@ -171,6 +285,7 @@ function App() {
             <p className="eyebrow">Front page · The society speaks</p>
             <h1 id="hero-title">Stories, screens,<br />verses <em>&amp;</em> voices.</h1>
             <p className="hero-intro">A common room for readers, writers, film lovers, and anyone who has ever underlined a sentence just to return to it later.</p>
+            <QuoteEgg quote={marginQuotes.hero} onReveal={revealQuote} />
             <div className="hero-actions">
               <a className="button button-primary" href="#events">See what we do</a>
               <a className="button button-secondary" href="#join" onClick={(event) => openDialog("join", event)}>Join the club</a>
@@ -209,6 +324,7 @@ function App() {
               <span className="card-number">Editor’s note</span>
               <h3>There is room at the table.</h3>
               <p>LitSoc is for practiced writers and first-time readers alike. No expertise required—only curiosity.</p>
+              <QuoteEgg quote={marginQuotes.table} onReveal={revealQuote} />
             </article>
             {activities.map(([tone, number, title, copy]) => (
               <article className={`activity-card ${tone} reveal`} key={number}>
@@ -242,6 +358,7 @@ function App() {
           <div className="works-layout">
             <article className="featured-work reveal">
               <p className="eyebrow">The first page is waiting</p><h3>Poems, prose, reviews, and reflections belong here.</h3><p className="dropcap">LitSoc will use this space to publish student voices with their permission and preferred credit. A poem of the month, a note on a film, a short story, or a book that would not let someone go.</p><a className="text-link" href="#join"><LinkArrow>Share your work</LinkArrow></a>
+              <QuoteEgg quote={marginQuotes.voices} onReveal={revealQuote} />
             </article>
             <aside className="departments-list reveal" aria-label="Creative work categories">
               <p className="eyebrow">Inside the section</p>
@@ -249,7 +366,7 @@ function App() {
             </aside>
           </div>
           <div className="book-shelf reveal" aria-labelledby="books-title">
-            <div className="book-shelf-intro"><p className="eyebrow">Shelf notes · Four places to begin</p><h3 id="books-title">Books worth carrying around.</h3><p>Four very different reads for a future session, a long bus ride, or an argument with a friend.</p></div>
+            <div className="book-shelf-intro"><p className="eyebrow">Shelf notes · Four places to begin</p><h3 id="books-title">Books worth carrying around.</h3><p>Four very different reads for a future session, a long bus ride, or an argument with a friend.</p><QuoteEgg quote={marginQuotes.shelf} onReveal={revealQuote} /></div>
             {books.map(([tone, number, title, author, note]) => <article className={`book-card ${tone}`} key={title}><span>{number}</span><h4>{title}</h4><p>{author}</p><small>{note}</small></article>)}
           </div>
         </section>
@@ -262,7 +379,7 @@ function App() {
         </section>
 
         <section className="archive page-shell" id="moments" aria-labelledby="archive-title">
-          <div className="archive-title reveal"><p className="eyebrow">The archive · Recent moments</p><h2 id="archive-title">To be collected,<br />captioned &amp; remembered.</h2></div>
+          <div className="archive-title reveal"><div><p className="eyebrow">The archive · Recent moments</p><QuoteEgg quote={marginQuotes.archive} onReveal={revealQuote} /></div><h2 id="archive-title">To be collected,<br />captioned &amp; remembered.</h2></div>
           <div className="archive-strip" aria-label="Future LitSoc event archive">{archiveCards.map(([tone, frame, title, copy]) => <article className={`archive-card ${tone} reveal`} key={frame}><span>{frame}</span><strong>{title}</strong><p>{copy}</p></article>)}</div>
           <p className="archive-caption">Real LitSoc photographs will replace these typographic archive cards when supplied.</p>
         </section>
@@ -270,7 +387,7 @@ function App() {
         <section className="about" id="about" aria-labelledby="about-title">
           <div className="page-shell about-grid">
             <div className="reveal"><p className="eyebrow">About the society</p><h2 id="about-title">Literature lives<br />between people.</h2></div>
-            <div className="about-copy reveal"><p>LitSoc is the Literary Society of BMSIT: a student community for books, cinema, poetry, writing, and the conversations they begin.</p><p>We gather to read closely, watch curiously, speak honestly, and make space for new voices across campus.</p><a className="text-link light-link" href="#join"><LinkArrow>Meet us in the next issue</LinkArrow></a></div>
+            <div className="about-copy reveal"><p>LitSoc is the Literary Society of BMSIT: a student community for books, cinema, poetry, writing, and the conversations they begin.</p><p>We gather to read closely, watch curiously, speak honestly, and make space for new voices across campus.</p><QuoteEgg quote={marginQuotes.people} onReveal={revealQuote} /><a className="text-link light-link" href="#join"><LinkArrow>Meet us in the next issue</LinkArrow></a></div>
           </div>
         </section>
 
@@ -332,6 +449,7 @@ function App() {
 
       <SocialDialog open={dialog === "join"} onClose={closeDialog} type="join" />
       <SocialDialog open={dialog === "instagram"} onClose={closeDialog} type="instagram" />
+      <QuoteDialog quote={activeQuote} foundCount={foundQuotes.length} total={Object.keys(marginQuotes).length} onClose={closeQuote} />
     </>
   );
 }

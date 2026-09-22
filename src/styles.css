@@ -1092,6 +1092,187 @@ button.button {
   font-family: var(--utility);
 }
 
+.quote-egg {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 18px;
+  border: 1px solid var(--ink);
+  padding: 7px 10px;
+  transform: rotate(-1.5deg);
+  background: var(--paper-light);
+  color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  cursor: pointer;
+  font-family: var(--utility);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.quote-egg:hover {
+  transform: translate(-1px, -2px) rotate(1deg);
+  box-shadow: 5px 6px 0 var(--ink);
+}
+
+.quote-egg:active {
+  transform: translate(2px, 2px) rotate(0);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.quote-egg > span:first-child {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.quote-egg-brick { background: var(--brick); color: var(--reverse); }
+.quote-egg-violet { background: var(--violet); }
+.quote-egg-mustard { background: var(--mustard); }
+.quote-egg-sage { background: var(--sage); }
+
+.editor-note .quote-egg {
+  margin-top: 28px;
+}
+
+.featured-work .quote-egg {
+  margin-left: 20px;
+}
+
+.book-shelf-intro .quote-egg {
+  margin-top: 12px;
+}
+
+.archive-title .quote-egg {
+  margin-top: 8px;
+}
+
+.about-copy .quote-egg {
+  margin: 8px 0 20px;
+  box-shadow: 3px 3px 0 var(--reverse);
+}
+
+.about-copy .quote-egg:hover {
+  box-shadow: 5px 6px 0 var(--reverse);
+}
+
+.quote-dialog {
+  width: min(760px, calc(100% - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 0;
+  padding: 12px;
+  background: transparent;
+  color: var(--ink);
+}
+
+.quote-dialog::backdrop {
+  background: rgb(23 23 19 / 0.78);
+  backdrop-filter: blur(4px);
+}
+
+.quote-dialog[open] {
+  animation: dialog-in 220ms ease both;
+}
+
+.quote-slip {
+  --quote-accent: var(--brick);
+  position: relative;
+  overflow: hidden;
+  border: 4px double var(--ink);
+  padding: clamp(30px, 4vw, 48px);
+  background:
+    linear-gradient(135deg, transparent 0 72%, color-mix(in srgb, var(--quote-accent) 28%, transparent) 72% 100%),
+    repeating-linear-gradient(0deg, rgb(23 23 19 / 0.018) 0, rgb(23 23 19 / 0.018) 1px, transparent 1px, transparent 4px),
+    var(--paper-light);
+  box-shadow: 12px 12px 0 var(--quote-accent);
+}
+
+.quote-slip-brick { --quote-accent: var(--brick); }
+.quote-slip-violet { --quote-accent: var(--violet); }
+.quote-slip-mustard { --quote-accent: var(--mustard); }
+.quote-slip-sage { --quote-accent: var(--sage); }
+
+.quote-slip-header,
+.quote-slip-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  font-family: var(--utility);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.quote-slip-header {
+  margin-right: 50px;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 14px;
+}
+
+.quote-slip blockquote {
+  position: relative;
+  z-index: 1;
+  margin: clamp(42px, 5vw, 58px) 0;
+}
+
+.quote-mark {
+  position: absolute;
+  top: -0.5em;
+  left: -0.18em;
+  color: color-mix(in srgb, var(--quote-accent) 55%, transparent);
+  font-family: var(--display);
+  font-size: clamp(8rem, 22vw, 13rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.quote-slip blockquote p {
+  position: relative;
+  max-width: 15ch;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+.quote-slip cite {
+  display: block;
+  margin-top: 24px;
+  font-family: var(--utility);
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.quote-slip-footer {
+  align-items: center;
+  border-top: 1.5px solid var(--ink);
+  padding-top: 16px;
+}
+
+.quote-slip-footer button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-transform: inherit;
+}
+
 .join-dialog {
   width: min(880px, calc(100% - 32px));
   max-height: calc(100dvh - 32px);
@@ -1631,6 +1812,46 @@ button.button {
   .dialog-paper {
     padding: 28px 22px;
     box-shadow: 7px 7px 0 var(--mustard);
+  }
+
+  .quote-egg {
+    font-size: 0.62rem;
+  }
+
+  .featured-work .quote-egg {
+    margin-left: 0;
+  }
+
+  .quote-dialog {
+    width: calc(100% - 20px);
+    padding: 6px;
+  }
+
+  .quote-slip {
+    padding: 28px 22px;
+    box-shadow: 7px 7px 0 var(--quote-accent);
+  }
+
+  .quote-slip-header,
+  .quote-slip-footer {
+    display: grid;
+    gap: 8px;
+  }
+
+  .quote-slip-header {
+    margin-right: 42px;
+  }
+
+  .quote-slip blockquote {
+    margin-block: 58px;
+  }
+
+  .quote-slip blockquote p {
+    font-size: clamp(2.45rem, 12vw, 3.6rem);
+  }
+
+  .quote-slip-footer button {
+    width: fit-content;
   }
 
   .instagram-dialog .dialog-paper {
