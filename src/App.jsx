@@ -103,16 +103,23 @@ function LinkArrow({ children }) {
 
 function QuoteEgg({ quote, onReveal }) {
   return (
-    <button
-      className={`quote-egg quote-egg-${quote.tone}`}
-      type="button"
-      onClick={(event) => onReveal(quote, event)}
-      aria-label={`Open hidden margin quote ${quote.number}`}
-      title="A note is hiding in the margin"
-    >
-      <span aria-hidden="true">✦</span>
-      <span>Margin note {quote.number}</span>
-    </button>
+    <div className={`quote-flight-lane quote-flight-${quote.tone}`}>
+      <button
+        className="quote-egg"
+        type="button"
+        style={{ "--flight-delay": `-${Number(quote.number) * 1.35}s`, "--flight-duration": `${9 + Number(quote.number) * 0.7}s` }}
+        onClick={(event) => onReveal(quote, event)}
+        aria-label={`Catch the birds to open hidden quote ${quote.number}`}
+        title="Catch the birds to reveal a quote"
+      >
+        <span className="bird-flock" aria-hidden="true">
+          <svg className="bird bird-one" viewBox="0 0 34 18"><path d="M2 13c5-7 10-7 15 0 5-7 10-7 15 0" /></svg>
+          <svg className="bird bird-two" viewBox="0 0 34 18"><path d="M2 13c5-7 10-7 15 0 5-7 10-7 15 0" /></svg>
+          <svg className="bird bird-three" viewBox="0 0 34 18"><path d="M2 13c5-7 10-7 15 0 5-7 10-7 15 0" /></svg>
+        </span>
+        <span className="bird-whisper">catch a thought</span>
+      </button>
+    </div>
   );
 }
 
@@ -135,22 +142,27 @@ function QuoteDialog({ quote, foundCount, total, onClose }) {
       onClick={(event) => event.target === event.currentTarget && onClose()}
     >
       {quote && (
-        <article className={`quote-slip quote-slip-${quote.tone}`}>
-          <button className="dialog-close" type="button" onClick={onClose} aria-label="Close hidden quote">×</button>
-          <header className="quote-slip-header">
-            <span>Found in the margins</span>
-            <span>{foundCount} / {total} discovered</span>
-          </header>
-          <blockquote>
-            <span className="quote-mark" aria-hidden="true">“</span>
-            <p id="quote-dialog-title">{quote.quote}</p>
-            <cite>{quote.source}</cite>
-          </blockquote>
-          <footer className="quote-slip-footer">
-            <span>Marginalia no. {quote.number}</span>
-            <button type="button" onClick={onClose}>Return to the page <span aria-hidden="true">→</span></button>
-          </footer>
-        </article>
+        <div className={`smoke-scene smoke-scene-${quote.tone}`}>
+          <div className="smoke-puffs" aria-hidden="true">
+            <span /><span /><span /><span /><span />
+          </div>
+          <article className={`quote-slip quote-slip-${quote.tone}`}>
+            <button className="dialog-close" type="button" onClick={onClose} aria-label="Close hidden quote">×</button>
+            <header className="quote-slip-header">
+              <span>Carried in on the wind</span>
+              <span>{foundCount} / {total} discovered</span>
+            </header>
+            <blockquote>
+              <span className="quote-mark" aria-hidden="true">“</span>
+              <p id="quote-dialog-title">{quote.quote}</p>
+              <cite>{quote.source}</cite>
+            </blockquote>
+            <footer className="quote-slip-footer">
+              <span>Cloud note no. {quote.number}</span>
+              <button type="button" onClick={onClose}>Let it drift away <span aria-hidden="true">→</span></button>
+            </footer>
+          </article>
+        </div>
       )}
     </dialog>
   );

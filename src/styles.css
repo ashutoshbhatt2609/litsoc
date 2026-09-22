@@ -1092,78 +1092,125 @@ button.button {
   font-family: var(--utility);
 }
 
+.quote-flight-lane {
+  --bird-color: var(--brick);
+  position: relative;
+  width: 100%;
+  height: 58px;
+  margin-top: 14px;
+  overflow: hidden;
+  border-bottom: 1px dashed color-mix(in srgb, var(--bird-color) 38%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.quote-flight-brick { --bird-color: var(--brick); }
+.quote-flight-violet { --bird-color: #735f82; }
+.quote-flight-mustard { --bird-color: #9d7412; }
+.quote-flight-sage { --bird-color: #4f7460; }
+
 .quote-egg {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  width: fit-content;
-  margin-top: 18px;
-  border: 1px solid var(--ink);
-  padding: 7px 10px;
-  transform: rotate(-1.5deg);
-  background: var(--paper-light);
-  color: var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
+  position: absolute;
+  top: 2px;
+  left: -150px;
+  display: grid;
+  width: 142px;
+  height: 52px;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  animation: bird-crossing var(--flight-duration) linear var(--flight-delay) infinite;
+  background: transparent;
+  color: var(--bird-color);
   cursor: pointer;
+}
+
+.quote-egg:hover,
+.quote-egg:focus-visible {
+  animation-play-state: paused;
+}
+
+.quote-egg:focus-visible {
+  border-radius: 999px;
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.bird-flock {
+  position: relative;
+  display: block;
+  width: 118px;
+  height: 31px;
+}
+
+.bird {
+  position: absolute;
+  width: 34px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 2.4;
+  animation: bird-flap 700ms ease-in-out infinite alternate;
+}
+
+.bird-one {
+  top: 9px;
+  left: 0;
+}
+
+.bird-two {
+  top: 0;
+  left: 43px;
+  width: 28px;
+  animation-delay: -260ms;
+}
+
+.bird-three {
+  top: 12px;
+  right: 0;
+  width: 23px;
+  animation-delay: -480ms;
+}
+
+.bird-whisper {
+  position: absolute;
+  right: 18px;
+  bottom: 0;
   font-family: var(--utility);
-  font-size: 0.68rem;
+  font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.1em;
+  opacity: 0;
   text-transform: uppercase;
-  transition: transform 160ms ease, box-shadow 160ms ease;
+  transition: opacity 160ms ease;
 }
 
-.quote-egg:hover {
-  transform: translate(-1px, -2px) rotate(1deg);
-  box-shadow: 5px 6px 0 var(--ink);
+.quote-egg:hover .bird-whisper,
+.quote-egg:focus-visible .bird-whisper {
+  opacity: 1;
 }
 
-.quote-egg:active {
-  transform: translate(2px, 2px) rotate(0);
-  box-shadow: 1px 1px 0 var(--ink);
+.about-copy .quote-flight-lane {
+  --bird-color: var(--mustard);
+  margin-bottom: 16px;
 }
 
-.quote-egg > span:first-child {
-  font-size: 1rem;
-  line-height: 1;
+@keyframes bird-crossing {
+  from { left: -150px; }
+  to { left: 100%; }
 }
 
-.quote-egg-brick { background: var(--brick); color: var(--reverse); }
-.quote-egg-violet { background: var(--violet); }
-.quote-egg-mustard { background: var(--mustard); }
-.quote-egg-sage { background: var(--sage); }
-
-.editor-note .quote-egg {
-  margin-top: 28px;
-}
-
-.featured-work .quote-egg {
-  margin-left: 20px;
-}
-
-.book-shelf-intro .quote-egg {
-  margin-top: 12px;
-}
-
-.archive-title .quote-egg {
-  margin-top: 8px;
-}
-
-.about-copy .quote-egg {
-  margin: 8px 0 20px;
-  box-shadow: 3px 3px 0 var(--reverse);
-}
-
-.about-copy .quote-egg:hover {
-  box-shadow: 5px 6px 0 var(--reverse);
+@keyframes bird-flap {
+  from { transform: translateY(1px) scaleY(0.78); }
+  to { transform: translateY(-2px) scaleY(1.12); }
 }
 
 .quote-dialog {
-  width: min(760px, calc(100% - 32px));
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
+  width: min(820px, calc(100% - 24px));
+  max-height: none;
+  overflow: visible;
   border: 0;
-  padding: 12px;
+  padding: 54px;
   background: transparent;
   color: var(--ink);
 }
@@ -1177,17 +1224,58 @@ button.button {
   animation: dialog-in 220ms ease both;
 }
 
+.smoke-scene {
+  --quote-accent: var(--brick);
+  position: relative;
+  isolation: isolate;
+  animation: cloud-arrive 620ms cubic-bezier(0.2, 0.85, 0.25, 1.18) both;
+}
+
+.smoke-scene-brick { --quote-accent: var(--brick); }
+.smoke-scene-violet { --quote-accent: var(--violet); }
+.smoke-scene-mustard { --quote-accent: var(--mustard); }
+.smoke-scene-sage { --quote-accent: var(--sage); }
+
+.smoke-puffs {
+  position: absolute;
+  z-index: -1;
+  inset: -42px;
+  pointer-events: none;
+}
+
+.smoke-puffs span {
+  position: absolute;
+  display: block;
+  width: 110px;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, var(--quote-accent) 42%, var(--ink));
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper-light) 76%, var(--quote-accent));
+  filter: blur(1px);
+  opacity: 0;
+  animation: smoke-bloom 760ms ease-out forwards;
+}
+
+.smoke-puffs span:nth-child(1) { left: 2%; bottom: 2%; width: 96px; animation-delay: 20ms; }
+.smoke-puffs span:nth-child(2) { left: -1%; top: 20%; width: 126px; animation-delay: 90ms; }
+.smoke-puffs span:nth-child(3) { right: 3%; top: -2%; width: 112px; animation-delay: 150ms; }
+.smoke-puffs span:nth-child(4) { right: -2%; bottom: 14%; width: 138px; animation-delay: 220ms; }
+.smoke-puffs span:nth-child(5) { left: 40%; bottom: -5%; width: 104px; animation-delay: 290ms; }
+
 .quote-slip {
   --quote-accent: var(--brick);
   position: relative;
+  z-index: 1;
   overflow: hidden;
-  border: 4px double var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 82px 108px 76px 112px / 92px 74px 106px 82px;
   padding: clamp(30px, 4vw, 48px);
   background:
-    linear-gradient(135deg, transparent 0 72%, color-mix(in srgb, var(--quote-accent) 28%, transparent) 72% 100%),
+    radial-gradient(circle at 95% 100%, color-mix(in srgb, var(--quote-accent) 32%, transparent) 0 28%, transparent 29%),
+    radial-gradient(circle at 4% 3%, color-mix(in srgb, var(--quote-accent) 20%, transparent) 0 16%, transparent 17%),
     repeating-linear-gradient(0deg, rgb(23 23 19 / 0.018) 0, rgb(23 23 19 / 0.018) 1px, transparent 1px, transparent 4px),
     var(--paper-light);
-  box-shadow: 12px 12px 0 var(--quote-accent);
+  box-shadow: 14px 16px 0 color-mix(in srgb, var(--quote-accent) 78%, var(--ink));
 }
 
 .quote-slip-brick { --quote-accent: var(--brick); }
@@ -1271,6 +1359,18 @@ button.button {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-transform: inherit;
+}
+
+@keyframes cloud-arrive {
+  0% { opacity: 0; transform: translateY(34px) scale(0.78); filter: blur(12px); }
+  55% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes smoke-bloom {
+  0% { opacity: 0; transform: translate(0, 34px) scale(0.25); }
+  55% { opacity: 0.72; }
+  100% { opacity: 0.36; transform: translate(0, 0) scale(1); }
 }
 
 .join-dialog {
@@ -1814,20 +1914,34 @@ button.button {
     box-shadow: 7px 7px 0 var(--mustard);
   }
 
-  .quote-egg {
-    font-size: 0.62rem;
-  }
-
-  .featured-work .quote-egg {
-    margin-left: 0;
-  }
-
   .quote-dialog {
-    width: calc(100% - 20px);
-    padding: 6px;
+    width: calc(100% - 8px);
+    max-height: calc(100dvh - 8px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 30px 10px;
+  }
+
+  .smoke-puffs {
+    inset: -20px;
+  }
+
+  .smoke-puffs span {
+    width: 72px;
+  }
+
+  .smoke-puffs span:nth-child(1) { width: 62px; }
+  .smoke-puffs span:nth-child(2) { width: 78px; }
+  .smoke-puffs span:nth-child(3) { width: 68px; }
+  .smoke-puffs span:nth-child(4) { width: 82px; }
+  .smoke-puffs span:nth-child(5) { width: 66px; }
+
+  .quote-flight-lane {
+    height: 54px;
   }
 
   .quote-slip {
+    border-radius: 52px 68px 48px 72px / 62px 46px 70px 54px;
     padding: 28px 22px;
     box-shadow: 7px 7px 0 var(--quote-accent);
   }
@@ -1881,5 +1995,10 @@ button.button {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .quote-egg {
+    left: 0;
+    animation: none !important;
   }
 }
