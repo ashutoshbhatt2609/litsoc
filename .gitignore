@@ -1,2 +1,4 @@
 .vercel/
 .sites-runtime/
+node_modules/
+dist/

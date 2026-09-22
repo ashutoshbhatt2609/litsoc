@@ -1,6 +1,6 @@
 # LitSoc — Literary Society of BMSIT
 
-A responsive, newspaper-inspired website for LitSoc. The production-ready static site lives in `dist/`.
+A responsive, newspaper-inspired React website for LitSoc, built with Vite.
 
 ## Deploy on Vercel
 
@@ -8,17 +8,18 @@ A responsive, newspaper-inspired website for LitSoc. The production-ready static
 2. Choose **Add New → Project**.
 3. Import `ashutoshbhatt2609/litsoc`.
 4. Keep **Root Directory** set to the repository root (`./`).
-5. The included `vercel.json` automatically sets the framework to **Other** and the output directory to `dist`.
+5. The included `vercel.json` automatically selects **Vite** and the `dist` output directory.
 6. Choose **Deploy**.
 
-No build command, install command, or environment variables are required. Future pushes to `main` will deploy automatically after the GitHub repository is connected.
+Vercel will install the dependencies and run `npm run build` automatically. No environment variables are required. Future pushes to `main` will deploy automatically after the GitHub repository is connected.
 
 ## Local preview
 
-From the repository root, serve `dist/` with any static file server. For example:
+Install dependencies and start the Vite development server:
 
-```powershell
-python -m http.server 4173 --directory dist
+```shell
+npm install
+npm run dev
 ```
 
-Then open `http://localhost:4173/`.
+Then open the local URL printed by Vite.
