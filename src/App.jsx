@@ -220,7 +220,7 @@ function QuoteDialog({ quote, foundCount, total, onClose }) {
             <span /><span /><span /><span /><span />
           </div>
           <article className={`quote-slip quote-slip-${quote.tone}`}>
-            <button className="dialog-close" type="button" onClick={onClose} aria-label="Close hidden quote">×</button>
+            <button className="dialog-close" type="button" onClick={driftAway} aria-label="Close hidden quote">×</button>
             <header className="quote-slip-header">
               <span>Carried in on the wind</span>
               <span>{foundCount} / {total} discovered</span>
@@ -297,7 +297,7 @@ function CurioDialog({ curio, foundCount, total, onClose }) {
         <div className={`curio-scene${isLeaving ? " bubble-leaving" : ""}`}>
           <BubbleBurst />
           <article className={`curio-paper curio-paper-${curio.type}`}>
-          <button className="dialog-close" type="button" onClick={onClose} aria-label="Close vintage discovery">×</button>
+          <button className="dialog-close" type="button" onClick={returnCarefully} aria-label="Close vintage discovery">×</button>
           <header className="curio-header">
             <span>LitSoc cabinet of curiosities · {curio.number}</span>
             <span>{foundCount} / {total} found</span>
