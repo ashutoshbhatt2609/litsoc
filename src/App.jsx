@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
+const REGISTRATION_URL = "https://forms.gle/2MEEVWF1tvjE86uv6";
+const INSTAGRAM_URL = "https://www.instagram.com/literarysociety_bmsit?stkn=MWpmMGM0eDByOHpxdA==";
+
 const activities = [
   ["violet", "01 / Screen", "Movie Screenings", "Films chosen to leave us with something worth discussing after the credits."],
   ["mustard", "02 / Read", "Book Sessions", "Monthly conversations around books, ideas, passages, and unexpected favourites."],
@@ -346,21 +349,23 @@ function SocialDialog({ open, onClose, type }) {
         <p className="eyebrow">{isInstagram ? "LitSoc updates · Instagram" : "LitSoc membership · WhatsApp community"}</p>
         <h2 id={`${type}-dialog-title`}>{isInstagram ? "Follow LitSoc." : "Join the club."}</h2>
         <div className="dialog-grid">
-          <div
-            className={`qr-placeholder dialog-qr${isInstagram ? " instagram-qr" : ""}`}
-            role="img"
-            aria-label={`${isInstagram ? "LitSoc Instagram" : "WhatsApp community"} QR code will be added here`}
-          >
-            <span>{isInstagram ? "IG" : "QR"}</span>
-          </div>
-          <div className="dialog-copy">
-            <h3>{isInstagram ? "Scan or open the profile." : "Scan or open the invite."}</h3>
-            <p>{isInstagram ? "Follow the LitSoc page for event posters, announcements, reminders, and moments from the club." : "Use the QR code on another device, or open the WhatsApp community invitation directly."}</p>
-            <div className={`invite-link${isInstagram ? " instagram-link" : ""}`} aria-label={`${isInstagram ? "Instagram profile" : "WhatsApp invitation"} link pending`}>
-              <span>{isInstagram ? "Instagram profile link pending" : "WhatsApp invite link pending"}</span>
-              <button type="button" disabled>Copy</button>
+          {isInstagram ? (
+            <a className="qr-placeholder dialog-qr instagram-qr" href={INSTAGRAM_URL} target="_blank" rel="noreferrer" aria-label="Open the official LitSoc Instagram profile">
+              <span>IG</span>
+            </a>
+          ) : (
+            <div className="qr-placeholder dialog-qr" role="img" aria-label="WhatsApp community QR code will be added here">
+              <span>QR</span>
             </div>
-            <p className="dialog-status">Send the official {isInstagram ? "Instagram profile" : "community invite"} URL to activate both the link and QR code.</p>
+          )}
+          <div className="dialog-copy">
+            <h3>{isInstagram ? "Open the official profile." : "Scan or open the invite."}</h3>
+            <p>{isInstagram ? "Follow the LitSoc page for event posters, announcements, reminders, and moments from the club." : "Use the QR code on another device, or open the WhatsApp community invitation directly."}</p>
+            <div className={`invite-link${isInstagram ? " instagram-link" : ""}`}>
+              <span>{isInstagram ? "@literarysociety_bmsit" : "WhatsApp invite link pending"}</span>
+              {isInstagram ? <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Open</a> : <button type="button" disabled>Copy</button>}
+            </div>
+            <p className="dialog-status">{isInstagram ? "Official LitSoc Instagram · Event updates, posters, and club moments." : "Send the official community invite URL to activate both the link and QR code."}</p>
           </div>
         </div>
       </div>
@@ -450,7 +455,7 @@ function App() {
             <span>Menu</span><span className="menu-mark" aria-hidden="true" />
           </button>
           <nav className={`site-nav${menuOpen ? " is-open" : ""}`} id="site-nav" aria-label="Main navigation">
-            <a href="#events" onClick={closeMenu}>Events</a>
+            <a href="#upcoming" onClick={closeMenu}>Events</a>
             <a href="#works" onClick={closeMenu}>Works</a>
             <a href="#about" onClick={closeMenu}>About</a>
             <a href="#moments" onClick={closeMenu}>Archive</a>
@@ -473,16 +478,15 @@ function App() {
           </div>
 
           <article className="lead-story reveal" aria-label="Next LitSoc gathering">
-            <div className="lead-art" aria-hidden="true">
-              <span className="lead-art-number">01</span>
-              <span className="lead-art-title">THE NEXT<br />GATHERING</span>
-              <span className="lead-art-stamp">ANNOUNCING SOON</span>
+            <div className="lead-art lead-art-event">
+              <img src="/assets/kavi-sammelan-2026.png" alt="Kavi Sammelan poetry event poster" />
+              <span className="lead-art-stamp">25 SEP · 1:30 PM</span>
             </div>
             <div className="lead-meta">
-              <p className="eyebrow">Upcoming events</p>
-              <h2>A new conversation is being set.</h2>
-              <p>Our next screening, reading, or open mic will appear here as soon as the details are confirmed.</p>
-              <a className="text-link" href="#join"><LinkArrow>Stay in the loop</LinkArrow></a>
+              <p className="eyebrow">Upcoming event · Poetry</p>
+              <h2>Kavi Sammelan.</h2>
+              <p>An evening of poetry, self-expression, and voices waiting to be heard.</p>
+              <a className="text-link" href={REGISTRATION_URL} target="_blank" rel="noreferrer"><LinkArrow>Register now</LinkArrow></a>
             </div>
           </article>
         </section>
@@ -514,18 +518,35 @@ function App() {
           </div>
         </section>
 
-        <section className="edition" aria-labelledby="edition-title">
+        <section className="edition" id="upcoming" aria-labelledby="edition-title">
           <div className="page-shell">
             <div className="edition-heading reveal">
-              <p className="eyebrow">This month’s edition</p><h2 id="edition-title">Upcoming events</h2><p>Fresh event details will be printed here as soon as they are confirmed.</p>
+              <p className="eyebrow">This month’s edition</p><h2 id="edition-title">Upcoming event</h2><p>Words, people, and perspectives meet on 25 September.</p>
             </div>
             <div className="event-ledger">
-              <article className="event-lead reveal">
-                <div className="event-date" aria-label="Date to be announced"><span>Date</span><strong>TBA</strong></div>
-                <div><p className="eyebrow">Lead story · Upcoming</p><h3>The next LitSoc gathering</h3><p>Screening, session, reading, or open mic—the details will arrive with the next issue.</p></div>
+              <article className="event-lead event-feature reveal">
+                <figure className="event-poster">
+                  <img src="/assets/kavi-sammelan-2026.png" alt="Kavi Sammelan by the Literary Society, BMSIT, on 25 September at 1:30 PM" />
+                </figure>
+                <div className="event-copy">
+                  <p className="eyebrow">Kavi Sammelan · Poetry competition</p>
+                  <h3>Give your words a voice.</h3>
+                  <p className="event-hindi" lang="hi">कविता केवल शब्द नहीं, भावनाओं की अभिव्यक्ति है।</p>
+                  <p>Whether it is a thought you have never spoken, a story you have never told, or an emotion you have struggled to put into words—this is your space to write, recite, listen, and express.</p>
+                  <dl className="event-facts">
+                    <div><dt>Date</dt><dd>25 September 2026</dd></div>
+                    <div><dt>Time</dt><dd>1:30 PM onwards</dd></div>
+                    <div><dt>Presented by</dt><dd>Literary Society, BMSIT</dd></div>
+                  </dl>
+                  <div className="event-actions">
+                    <a className="button button-primary" href={REGISTRATION_URL} target="_blank" rel="noreferrer">Register now</a>
+                    <a className="button button-secondary" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram updates</a>
+                  </div>
+                  <p className="event-closing" lang="hi">शब्दों की महफ़िल • एहसासों की शाम • आइए, अपने शब्दों को आवाज़ दें।</p>
+                </div>
               </article>
               <div className="event-note reveal">
-                <span className="stamp">Notice</span><h3>Have an idea for a session?</h3><p>Bring a book, film, theme, poem, or question you think the community should explore.</p><VintageEgg curio={vintageCurios.seal} onReveal={revealCurio} /><a className="text-link" href="#join"><LinkArrow>Write to LitSoc</LinkArrow></a>
+                <span className="stamp">Open call</span><h3>Your poem belongs in the room.</h3><p>Bring your words, your thoughts, and your कविता. Original voices and first-time performers are welcome.</p><VintageEgg curio={vintageCurios.seal} onReveal={revealCurio} /><a className="text-link" href={REGISTRATION_URL} target="_blank" rel="noreferrer"><LinkArrow>Open registration form</LinkArrow></a>
               </div>
             </div>
           </div>
@@ -623,7 +644,7 @@ function App() {
       <footer className="site-footer">
         <div className="page-shell footer-grid">
           <div><span className="footer-mark">LITSOC</span><p>The Literary Society of BMSIT</p></div>
-          <div><p className="eyebrow">Departments</p><a href="#events">Events</a><a href="#works">Works</a><a href="#about">About</a></div>
+          <div><p className="eyebrow">Departments</p><a href="#upcoming">Events</a><a href="#works">Works</a><a href="#about">About</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div>
           <div><p className="eyebrow">Colophon</p><p>Bengaluru, India</p><p>© {new Date().getFullYear()} LitSoc, BMSIT</p></div>
         </div>
       </footer>
