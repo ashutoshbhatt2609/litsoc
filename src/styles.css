@@ -192,6 +192,10 @@ a:focus-visible {
   display: none;
 }
 
+.mobile-menu-label {
+  display: none;
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(320px, 5fr);
@@ -2242,23 +2246,39 @@ button.button {
 
   .nav-wrap {
     position: relative;
+    display: grid;
+    grid-template-columns: 1fr 48px;
+    align-items: center;
   }
 
-  .menu-button {
-    display: flex;
-    width: 100%;
-    min-height: 48px;
-    align-items: center;
-    justify-content: space-between;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: var(--ink);
+  .mobile-menu-label {
+    display: block;
+    padding-left: 2px;
     font-family: var(--utility);
     font-size: 0.82rem;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
+  }
+
+  .menu-button {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    justify-self: end;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    padding: 0;
+    background: var(--paper-light);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .menu-button:hover,
+  .menu-button:focus-visible {
+    background: var(--ink);
+    color: var(--paper-light);
   }
 
   .menu-mark,
@@ -2292,24 +2312,39 @@ button.button {
     display: none;
     min-height: auto;
     align-items: stretch;
-    padding: 12px 18px 20px;
-    border-bottom: 3px double var(--ink);
-    background: var(--paper);
+    gap: 0;
+    padding: 6px 14px 14px;
+    border: 1px solid var(--ink);
+    border-top: 0;
+    background: var(--paper-light);
+    box-shadow: 6px 7px 0 var(--ink);
   }
 
   .site-nav.is-open {
     display: grid;
+    animation: mobile-menu-in 180ms ease-out both;
   }
 
   .site-nav a {
-    padding: 14px 0;
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    padding: 10px 6px;
     border-bottom: 1px solid var(--line);
+    text-align: left;
   }
 
   .site-nav .nav-join {
+    justify-content: center;
     margin: 12px 0 0;
-    padding: 12px 15px;
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--ink);
     text-align: center;
+  }
+
+  @keyframes mobile-menu-in {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .hero {

@@ -451,8 +451,9 @@ function App() {
         </div>
 
         <div className="nav-wrap page-shell">
-          <button className="menu-button" type="button" aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen((value) => !value)}>
-            <span>Menu</span><span className="menu-mark" aria-hidden="true" />
+          <span className="mobile-menu-label" aria-hidden="true">Menu</span>
+          <button className="menu-button" type="button" aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="site-nav" onClick={() => setMenuOpen((value) => !value)}>
+            <span className="menu-mark" aria-hidden="true" />
           </button>
           <nav className={`site-nav${menuOpen ? " is-open" : ""}`} id="site-nav" aria-label="Main navigation">
             <a href="#upcoming" onClick={closeMenu}>Events</a>
