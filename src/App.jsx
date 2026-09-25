@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 
-const REGISTRATION_URL = "https://forms.gle/2MEEVWF1tvjE86uv6";
 const INSTAGRAM_URL = "https://www.instagram.com/literarysociety_bmsit?stkn=MWpmMGM0eDByOHpxdA==";
 
 const activities = [
@@ -484,10 +483,10 @@ function App() {
               <span className="lead-art-stamp">25 SEP · 1:30 PM</span>
             </div>
             <div className="lead-meta">
-              <p className="eyebrow">Upcoming event · Poetry</p>
+              <p className="eyebrow">Results published · Poetry</p>
               <h2>Kavi Sammelan.</h2>
-              <p>An evening of poetry, self-expression, and voices waiting to be heard.</p>
-              <a className="text-link" href={REGISTRATION_URL} target="_blank" rel="noreferrer"><LinkArrow>Register now</LinkArrow></a>
+              <p>The verses have been heard. Meet the three voices honoured at Kavi Sammelan 2026.</p>
+              <a className="text-link" href="#results"><LinkArrow>See the results</LinkArrow></a>
             </div>
           </article>
         </section>
@@ -522,7 +521,7 @@ function App() {
         <section className="edition" id="upcoming" aria-labelledby="edition-title">
           <div className="page-shell">
             <div className="edition-heading reveal">
-              <p className="eyebrow">This month’s edition</p><h2 id="edition-title">Upcoming event</h2><p>Words, people, and perspectives meet on 25 September.</p>
+              <p className="eyebrow">Special results edition</p><h2 id="edition-title">Kavi Sammelan 2026</h2><p>A celebration of words, courage, and the voices that made the room listen.</p>
             </div>
             <div className="event-ledger">
               <article className="event-lead event-feature reveal">
@@ -540,16 +539,42 @@ function App() {
                     <div><dt>Presented by</dt><dd>Literary Society, BMSIT</dd></div>
                   </dl>
                   <div className="event-actions">
-                    <a className="button button-primary" href={REGISTRATION_URL} target="_blank" rel="noreferrer">Register now</a>
+                    <a className="button button-primary" href="#results">Meet the winners</a>
                     <a className="button button-secondary" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram updates</a>
                   </div>
                   <p className="event-closing" lang="hi">शब्दों की महफ़िल • एहसासों की शाम • आइए, अपने शब्दों को आवाज़ दें।</p>
                 </div>
               </article>
               <div className="event-note reveal">
-                <span className="stamp">Open call</span><h3>Your poem belongs in the room.</h3><p>Bring your words, your thoughts, and your कविता. Original voices and first-time performers are welcome.</p><VintageEgg curio={vintageCurios.seal} onReveal={revealCurio} /><a className="text-link" href={REGISTRATION_URL} target="_blank" rel="noreferrer"><LinkArrow>Open registration form</LinkArrow></a>
+                <span className="stamp">Curtain call</span><h3>Every poem found its room.</h3><p>Thank you to every poet who brought their words, thoughts, and कविता to the stage—and to everyone who listened.</p><VintageEgg curio={vintageCurios.seal} onReveal={revealCurio} /><a className="text-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer"><LinkArrow>See more on Instagram</LinkArrow></a>
               </div>
             </div>
+            <section className="results-board reveal" id="results" aria-labelledby="results-title">
+              <div className="results-intro">
+                <p className="eyebrow">Official results · 2026</p>
+                <span className="results-flourish" aria-hidden="true">✦</span>
+                <h3 id="results-title">The winning<br />voices.</h3>
+                <p>With gratitude to every participant, we proudly congratulate this year’s Kavi Sammelan prize winners.</p>
+              </div>
+              <ol className="winners-list">
+                <li className="winner-card winner-first">
+                  <span className="winner-rank"><b>1</b><small>First prize</small></span>
+                  <span className="winner-medal" aria-hidden="true">🥇</span>
+                  <strong>Dhruv Tiwari</strong>
+                </li>
+                <li className="winner-card winner-second">
+                  <span className="winner-rank"><b>2</b><small>Second prize</small></span>
+                  <span className="winner-medal" aria-hidden="true">🥈</span>
+                  <strong>Amitesh Bharadwaj</strong>
+                </li>
+                <li className="winner-card winner-third">
+                  <span className="winner-rank"><b>3</b><small>Third prize</small></span>
+                  <span className="winner-medal" aria-hidden="true">🥉</span>
+                  <strong>Tanvi</strong>
+                </li>
+              </ol>
+              <p className="results-signoff">To every poet who stepped up to the microphone—keep writing, keep reciting.</p>
+            </section>
           </div>
         </section>
 
