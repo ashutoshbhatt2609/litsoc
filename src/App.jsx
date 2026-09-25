@@ -479,8 +479,8 @@ function App() {
 
           <article className="lead-story reveal" aria-label="Next LitSoc gathering">
             <div className="lead-art lead-art-event">
-              <img src="/assets/kavi-sammelan-2026.png" alt="Kavi Sammelan poetry event poster" />
-              <span className="lead-art-stamp">25 SEP · 1:30 PM</span>
+              <img src="/assets/kavi-sammelan-event-2026.jpg" alt="Participants and organisers together after Kavi Sammelan 2026" />
+              <span className="lead-art-stamp">KAVI SAMMELAN · 2026</span>
             </div>
             <div className="lead-meta">
               <p className="eyebrow">Results published · Poetry</p>
@@ -525,8 +525,9 @@ function App() {
             </div>
             <div className="event-ledger">
               <article className="event-lead event-feature reveal">
-                <figure className="event-poster">
-                  <img src="/assets/kavi-sammelan-2026.png" alt="Kavi Sammelan by the Literary Society, BMSIT, on 25 September at 1:30 PM" />
+                <figure className="event-poster event-photo">
+                  <img src="/assets/kavi-sammelan-event-2026.jpg" alt="Kavi Sammelan 2026 participants and organisers gathered in a BMSIT classroom" loading="lazy" />
+                  <figcaption>After the final verse · Kavi Sammelan 2026</figcaption>
                 </figure>
                 <div className="event-copy">
                   <p className="eyebrow">Kavi Sammelan · Poetry competition</p>
