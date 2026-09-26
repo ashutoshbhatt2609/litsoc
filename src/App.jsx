@@ -106,10 +106,19 @@ const vintageCurios = {
   },
 };
 
-const archiveCards = [
-  ["archive-one", "Frame 01", "Screenings", "Posters, projector glow, and the conversation after."],
-  ["archive-two", "Frame 02", "Sessions", "Marked pages, shared passages, and changing opinions."],
-  ["archive-three", "Frame 03", "Open mics", "A microphone, a room, and someone reading for the first time."],
+const eventArchive = [
+  {
+    id: "kavi-sammelan-2026",
+    record: "Record no. 001",
+    date: "25 September 2026",
+    datetime: "2026-09-25",
+    category: "Poetry competition",
+    title: "Kavi Sammelan 2026",
+    image: "/assets/kavi-sammelan-event-2026.jpg",
+    alt: "Kavi Sammelan 2026 participants and organisers gathered in a BMSIT classroom",
+    summary: "An afternoon of original poetry, recitation, and self-expression—bringing student voices together in Hindi, English, and the language of lived experience.",
+    winners: ["Dhruv Tiwari · First prize", "Amitesh Bharadwaj · Second prize", "Tanvi · Third prize"],
+  },
 ];
 
 const bubbleTrail = [
@@ -458,7 +467,7 @@ function App() {
             <a href="#upcoming" onClick={closeMenu}>Events</a>
             <a href="#works" onClick={closeMenu}>Works</a>
             <a href="#about" onClick={closeMenu}>About</a>
-            <a href="#moments" onClick={closeMenu}>Archive</a>
+            <a href="#event-archive" onClick={closeMenu}>Archive</a>
             <a className="nav-join" href="#join" onClick={(event) => openDialog("join", event)}>Join LitSoc</a>
           </nav>
         </div>
@@ -607,10 +616,43 @@ function App() {
           </div>
         </section>
 
-        <section className="archive page-shell" id="moments" aria-labelledby="archive-title">
-          <div className="archive-title reveal"><div><p className="eyebrow">The archive · Recent moments</p><QuoteEgg quote={marginQuotes.archive} onReveal={revealQuote} /></div><h2 id="archive-title">To be collected,<br />captioned &amp; remembered.</h2></div>
-          <div className="archive-strip" aria-label="Future LitSoc event archive">{archiveCards.map(([tone, frame, title, copy]) => <article className={`archive-card ${tone} reveal`} key={frame}><span>{frame}</span><strong>{title}</strong><p>{copy}</p></article>)}</div>
-          <div className="archive-caption-row"><p className="archive-caption">Real LitSoc photographs will replace these typographic archive cards when supplied.</p><VintageEgg curio={vintageCurios.stamp} onReveal={revealCurio} /></div>
+        <section className="archive page-shell" id="event-archive" aria-labelledby="archive-title">
+          <div className="archive-title reveal">
+            <div><p className="eyebrow">The event archive · Since 2026</p><QuoteEgg quote={marginQuotes.archive} onReveal={revealQuote} /></div>
+            <h2 id="archive-title">Every gathering,<br />kept on record.</h2>
+          </div>
+          <div className="archive-index reveal" aria-label="Event archive summary">
+            <span>LitSoc record office</span>
+            <strong>{String(eventArchive.length).padStart(2, "0")} {eventArchive.length === 1 ? "event" : "events"} recorded</strong>
+            <p>Photographs, dates, recaps, and results from each LitSoc gathering.</p>
+          </div>
+          <div className="event-records" aria-label="Past LitSoc events">
+            {eventArchive.map((event) => (
+              <article className="event-record reveal" id={event.id} key={event.id}>
+                <figure className="event-record-photo">
+                  <img src={event.image} alt={event.alt} loading="lazy" />
+                  <figcaption>{event.record} · Filed in the LitSoc archive</figcaption>
+                </figure>
+                <div className="event-record-copy">
+                  <header>
+                    <p className="eyebrow">{event.record} · {event.category}</p>
+                    <time dateTime={event.datetime}>{event.date}</time>
+                  </header>
+                  <h3>{event.title}</h3>
+                  <p>{event.summary}</p>
+                  <div className="event-record-results">
+                    <span>Results</span>
+                    <ol>{event.winners.map((winner) => <li key={winner}>{winner}</li>)}</ol>
+                  </div>
+                  <div className="event-record-actions">
+                    <a className="text-link" href="#results"><LinkArrow>Read the full results</LinkArrow></a>
+                    <a className="text-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer"><LinkArrow>Event updates</LinkArrow></a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+          <div className="archive-caption-row"><p className="archive-caption">This ledger will grow after every screening, reading session, open mic, workshop, and literary gathering.</p><VintageEgg curio={vintageCurios.stamp} onReveal={revealCurio} /></div>
         </section>
 
         <section className="about" id="about" aria-labelledby="about-title">
@@ -671,7 +713,7 @@ function App() {
       <footer className="site-footer">
         <div className="page-shell footer-grid">
           <div><span className="footer-mark">LITSOC</span><p>The Literary Society of BMSIT</p></div>
-          <div><p className="eyebrow">Departments</p><a href="#upcoming">Events</a><a href="#works">Works</a><a href="#about">About</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div>
+          <div><p className="eyebrow">Departments</p><a href="#upcoming">Events</a><a href="#event-archive">Archive</a><a href="#works">Works</a><a href="#about">About</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div>
           <div><p className="eyebrow">Colophon</p><p>Bengaluru, India</p><p>© {new Date().getFullYear()} LitSoc, BMSIT</p></div>
         </div>
       </footer>
