@@ -2,23 +2,18 @@ import { useEffect, useState } from "react";
 
 const INSTAGRAM_URL = "https://www.instagram.com/literarysociety_bmsit?stkn=MWpmMGM0eDByOHpxdA==";
 
-const teamMembers = [
+const leadership = [
   { number: "01", role: "President", tone: "mustard" },
   { number: "02", role: "Secretary", tone: "violet" },
-  { number: "03", role: "Role to be added", tone: "sage" },
-  { number: "04", role: "Role to be added", tone: "brick" },
-  { number: "05", role: "Role to be added", tone: "paper" },
-  { number: "06", role: "Role to be added", tone: "mustard" },
-  { number: "07", role: "Role to be added", tone: "violet" },
-  { number: "08", role: "Role to be added", tone: "sage" },
 ];
+
+const openSeats = ["03", "04", "05", "06", "07", "08"];
 
 function PortraitPlaceholder({ number }) {
   return (
-    <div className="wanted-photo" aria-label="Portrait will be added later">
-      <span className="wanted-silhouette" aria-hidden="true"><i /><b /></span>
-      <small>Photograph forthcoming</small>
-      <em aria-hidden="true">File {number}</em>
+    <div className="portrait-placeholder" aria-label="Portrait will be added later">
+      <span aria-hidden="true">{number}</span>
+      <small>Portrait<br />to be filed</small>
     </div>
   );
 }
@@ -67,8 +62,8 @@ function TeamPage() {
       <main id="team-main">
         <section className="team-hero page-shell" aria-labelledby="team-title">
           <div>
-            <p className="eyebrow">The LitSoc files · 2026–27</p>
-            <h1 id="team-title">Wanted:<br />people with words.</h1>
+            <p className="eyebrow">The masthead · 2026–27</p>
+            <h1 id="team-title">The people<br />between the lines.</h1>
           </div>
           <div className="team-hero-note">
             <span>Editorial note</span>
@@ -76,28 +71,44 @@ function TeamPage() {
           </div>
         </section>
 
-        <section className="wanted-board page-shell" aria-labelledby="roster-title">
+        <section className="leadership page-shell" aria-labelledby="leadership-title">
           <header className="team-section-heading">
-            <p className="eyebrow">Official notice · Literary Society, BMSIT</p>
-            <h2 id="roster-title">The people<br />behind the pages.</h2>
-            <p>Each member gets an individual newspaper card. Names, portraits, and final roles will be added when the official team details arrive.</p>
+            <p className="eyebrow">Office bearers · Volume 01</p>
+            <h2 id="leadership-title">At the head<br />of the table.</h2>
+            <p>Names and portraits will be added when the official team details are provided.</p>
           </header>
-          <div className="wanted-grid">
-            {teamMembers.map((member) => (
-              <article className={`wanted-card wanted-${member.tone}`} key={member.number}>
-                <header className="wanted-card-header">
-                  <span>Wanted</span>
-                  <small>Member file · {member.number}</small>
-                </header>
+          <div className="leadership-grid">
+            {leadership.map((member) => (
+              <article className={`leader-card leader-${member.tone}`} key={member.role}>
                 <PortraitPlaceholder number={member.number} />
-                <div className="wanted-copy">
-                  <p className="wanted-role">{member.role}</p>
+                <div className="leader-copy">
+                  <span className="member-number">Member file · {member.number}</span>
+                  <p className="member-role">{member.role}</p>
                   <h3>Name to be added</h3>
-                  <p className="wanted-note">Wanted for keeping stories, screenings, poems, and conversations in circulation.</p>
+                  <div className="member-lines" aria-hidden="true"><i /><i /><i /></div>
+                  <p className="member-note">Portrait, introduction, and preferred credit awaiting the official team list.</p>
                 </div>
-                <footer><span>LitSoc Gazette</span><span>BMSIT · Bengaluru</span></footer>
               </article>
             ))}
+          </div>
+        </section>
+
+        <section className="team-directory" aria-labelledby="directory-title">
+          <div className="page-shell">
+            <header className="directory-heading">
+              <p className="eyebrow">The rest of the masthead</p>
+              <h2 id="directory-title">More voices<br />to be introduced.</h2>
+              <p>These spaces are ready for the remaining roles, names, portraits, and short introductions.</p>
+            </header>
+            <div className="directory-grid">
+              {openSeats.map((number) => (
+                <article className="directory-card" key={number}>
+                  <span>{number}</span>
+                  <div><p>Role to be added</p><h3>Team member</h3></div>
+                  <small>Awaiting details</small>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
