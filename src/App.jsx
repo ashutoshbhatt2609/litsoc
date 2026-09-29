@@ -466,6 +466,7 @@ function App() {
           <nav className={`site-nav${menuOpen ? " is-open" : ""}`} id="site-nav" aria-label="Main navigation">
             <a href="#upcoming" onClick={closeMenu}>Events</a>
             <a href="#works" onClick={closeMenu}>Works</a>
+            <a href="/team">Team</a>
             <a href="#about" onClick={closeMenu}>About</a>
             <a href="#event-archive" onClick={closeMenu}>Archive</a>
             <a className="nav-join" href="#join" onClick={(event) => openDialog("join", event)}>Join LitSoc</a>
@@ -713,7 +714,7 @@ function App() {
       <footer className="site-footer">
         <div className="page-shell footer-grid">
           <div><span className="footer-mark">LITSOC</span><p>The Literary Society of BMSIT</p></div>
-          <div><p className="eyebrow">Departments</p><a href="#upcoming">Events</a><a href="#event-archive">Archive</a><a href="#works">Works</a><a href="#about">About</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div>
+          <div><p className="eyebrow">Departments</p><a href="#upcoming">Events</a><a href="#event-archive">Archive</a><a href="#works">Works</a><a href="/team">Team</a><a href="#about">About</a><a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram</a></div>
           <div><p className="eyebrow">Colophon</p><p>Bengaluru, India</p><p>© {new Date().getFullYear()} LitSoc, BMSIT</p></div>
         </div>
       </footer>

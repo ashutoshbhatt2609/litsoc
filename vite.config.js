@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
   plugins: [react()],
@@ -10,5 +11,11 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL("./index.html", import.meta.url)),
+        team: fileURLToPath(new URL("./team.html", import.meta.url)),
+      },
+    },
   },
 });
