@@ -484,6 +484,7 @@ function App() {
             <div className="hero-actions">
               <a className="button button-primary" href="#events">See what we do</a>
               <a className="button button-secondary" href="#join" onClick={(event) => openDialog("join", event)}>Join the club</a>
+              <a className="button button-secondary" href="/team">Meet the team</a>
             </div>
           </div>
 
